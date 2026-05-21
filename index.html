@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>崴富國際｜台灣中小企業雲端管理系統｜POS收銀・店面預約・分店管理</title>
 <meta name="description" content="崴富國際有限公司，桃園在地，專為台灣中小企業打造雲端管理系統：POS收銀、店面預約、電子報、分店管理、租房管理。旗下品牌 CPshirt 職業服飾，企業制服採購首選。">
-<meta name="keywords" content="台灣管理系統,中小企業,雲端POS,店面收銀系統,店面預約系統,分店管理,租房管理,電子報系統,職業服飾,CPshirt,白襯衫,企業制服,桃園,崴富國際">
+<meta name="keywords" content="台灣管理系統,中小企業,EC SUPPLY採購工具,三聯式發票計算機,店面預約系統,分店管理,租房管理,電子報系統,職業服飾,CPshirt,白襯衫,企業制服,桃園,崴富國際">
+<link rel="canonical" href="https://www.wavecorp1.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -41,7 +42,7 @@ body::before {
   inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
   pointer-events: none;
-  z-index: 9999;
+  z-index: 1;
   opacity: 0.4;
 }
 
@@ -742,6 +743,27 @@ footer {
   letter-spacing: 0.5px;
   text-align: right;
 }
+.back-to-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 44px;
+  height: 44px;
+  background: var(--navy);
+  color: var(--gold);
+  border: none;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  transition: all 0.2s;
+  z-index: 998;
+}
+.back-to-top:hover { background: var(--gold); color: var(--navy); transform: translateY(-2px); }
+@media(max-width:768px) { .back-to-top { bottom: 20px; right: 20px; } }
 
 /* ─── DIVIDER ─── */
 .gold-divider {
@@ -859,6 +881,19 @@ nav.scrolled {
   font-weight: 700;
   letter-spacing: 0.5px;
 }
+.blog-more-btn {
+  display: inline-block;
+  padding: 14px 40px;
+  background: var(--navy);
+  color: var(--gold);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+}
+.blog-more-btn:hover { background: var(--gold); color: var(--navy); transform: translateY(-2px); }
 .blog-empty {
   grid-column: 1 / -1;
   text-align: center;
@@ -958,11 +993,12 @@ nav.scrolled {
 #admin-overlay {
   display: none;
   position: fixed;
-  inset: 0;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
   z-index: 10000;
-  background: #f0ede8;
+  background: #f7f5f0;
   font-family: 'Noto Sans TC', sans-serif;
-  overflow: hidden;
+  flex-direction: column;
 }
 .admin-topbar {
   height: 52px;
@@ -1030,43 +1066,132 @@ nav.scrolled {
 .admin-close-btn:hover { background: rgba(230,57,70,0.3); }
 .admin-body {
   display: flex;
+  width: 100vw;
   height: calc(100vh - 52px);
   overflow: hidden;
 }
-/* Sidebar */
-.admin-sidebar {
-  width: 260px;
-  background: var(--white);
-  border-right: 1px solid #e8e4dc;
+/* WP-style left nav */
+.admin-wp-nav {
+  width: 180px;
+  min-width: 180px;
+  height: 100%;
+  background: #1e1e2e;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 12px 0;
+  flex-shrink: 0;
+}
+.admin-wp-nav-section {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.3);
+  padding: 16px 16px 6px;
+  text-transform: uppercase;
+}
+.admin-wp-nav-item {
+  display: block;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s;
+  border-left: 3px solid transparent;
+}
+.admin-wp-nav-item:hover { background: rgba(255,255,255,0.06); color: #fff; }
+.admin-wp-nav-item.active { background: rgba(201,169,110,0.12); color: #c9a96e; border-left-color: #c9a96e; }
+
+/* Main area */
+.admin-main-area {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #f7f5f0;
+}
+#adminListView, #adminCategoriesView, #adminEditorArea {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: #f7f5f0;
+}
+#adminListView {
+  padding: 24px 32px;
+}
+#adminEditorArea {
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
-.admin-sidebar-header {
-  padding: 16px;
-  border-bottom: 1px solid #e8e4dc;
+.admin-list-header {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
-.admin-sidebar-header h3 { font-size: 13px; font-weight: 700; color: var(--navy); flex: 1; }
+.admin-list-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--navy);
+}
 .btn-new-post {
   background: var(--navy);
   color: var(--gold);
   border: none;
   border-radius: 6px;
-  padding: 6px 12px;
-  font-size: 12px;
+  padding: 8px 16px;
+  font-size: 13px;
   cursor: pointer;
   font-family: inherit;
   font-weight: 700;
   white-space: nowrap;
 }
 .btn-new-post:hover { opacity: 0.85; }
-.admin-post-list {
-  overflow-y: auto;
-  flex: 1;
+
+/* Article table */
+.admin-post-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
 }
+.admin-post-table thead tr {
+  background: #f0ede8;
+}
+.admin-post-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--steel);
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #e8e4dc;
+}
+.admin-post-table td {
+  padding: 12px 16px;
+  font-size: 13px;
+  border-bottom: 1px solid #f0ede8;
+  vertical-align: middle;
+}
+.admin-post-table tr:last-child td { border-bottom: none; }
+.admin-post-table tr:hover td { background: #faf9f7; }
+.admin-table-title {
+  font-weight: 600;
+  color: var(--navy);
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+}
+.admin-table-title:hover { color: var(--gold); }
+.admin-table-actions { display: flex; gap: 6px; align-items: center; }
+
+/* old sidebar compat - hidden */
+.admin-post-list { display: none; }
 .admin-post-item {
   padding: 12px 16px;
   border-bottom: 1px solid #f0ede8;
@@ -1359,6 +1484,159 @@ nav {
   .footer-copy { text-align: center; }
 }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "崴富國際有限公司",
+      "url": "https://wavecorp1.com",
+      "description": "崴富國際有限公司，桃園在地，專為台灣中小企業打造雲端管理系統：POS收銀、店面預約、電子報、分店管理、租房管理。旗下品牌 CPshirt 職業服飾，企業制服採購首選。"
+    },
+    {
+      "@type": ["Organization", "LocalBusiness"],
+      "name": "崴富國際有限公司",
+      "alternateName": "WAVE ECOMMERCE",
+      "url": "https://wavecorp1.com",
+      "logo": "https://wavecorp1.com/logo.png",
+      "taxID": "24554070",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "華亞三路39巷30號1樓",
+        "addressLocality": "龜山區",
+        "addressRegion": "桃園市",
+        "postalCode": "333",
+        "addressCountry": "TW"
+      },
+      "telephone": ["02-2876-0581", "03-328-0508"],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+          "opens": "12:00",
+          "closes": "18:00"
+        }
+      ],
+      "sameAs": [
+        "https://www.cpshirt.net",
+        "https://shopee.tw/willstanley",
+        "https://www.seehouse.tw"
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "CPshirt 職業服飾電商系統",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "url": "https://www.cpshirt.net",
+      "description": "桃園龜山實體門市，台灣最齊全的職業服飾選品，保全、房仲、餐飲制服一站購足。白色禮服襯衫 35–43號、西裝外套、西裝褲，10件以上可企業詢價。",
+      "brand": {
+        "@type": "Organization",
+        "name": "崴富國際有限公司"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "店面預約系統",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "線上預約管理系統，自動發送提醒通知，減少爽約率，整合 Google Calendar 與 LINE 自動通知，讓門市排班更有效率。",
+      "featureList": [
+        "Google Calendar 整合",
+        "LINE 自動提醒通知",
+        "預約衝突自動偵測"
+      ],
+      "brand": {
+        "@type": "Organization",
+        "name": "崴富國際有限公司"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "EC SUPPLY 商品管理工具",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "url": "https://www.wavecorp1.com/ecsupply/",
+      "description": "電商賣家採購管理平台，快速建立商品清單、比價採購、追蹤出貨進度，提升備貨效率。",
+      "featureList": [
+        "商品採購清單管理",
+        "多供應商比價追蹤",
+        "出貨進度即時掌控"
+      ],
+      "brand": {
+        "@type": "Organization",
+        "name": "崴富國際有限公司"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "三聯式統一發票計算機",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "url": "https://www.wavecorp1.com/invoice/",
+      "description": "快速計算含稅、未稅金額，適用三聯式統一發票開立，適合企業採購與報帳使用。",
+      "featureList": [
+        "含稅 / 未稅快速換算",
+        "三聯式發票格式適用",
+        "手機平板均可操作"
+      ],
+      "brand": {
+        "@type": "Organization",
+        "name": "崴富國際有限公司"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "分店管理系統",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "多據點庫存與人員同步管控，總部一個畫面掌握所有分店動態，支援跨店庫存即時同步、員工出勤與業績報表、權限分級管理。",
+      "featureList": [
+        "跨店庫存即時同步",
+        "員工出勤與業績報表",
+        "權限分級管理"
+      ],
+      "brand": {
+        "@type": "Organization",
+        "name": "崴富國際有限公司"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "租房管理系統",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "房東的智慧助手，自動追蹤租約到期、租金到帳，支援電子合約簽署，多房源集中管理，讓租務管理輕鬆自在。",
+      "featureList": [
+        "租約到期自動提醒",
+        "電子合約簽署",
+        "多房源集中管理"
+      ],
+      "brand": {
+        "@type": "Organization",
+        "name": "崴富國際有限公司"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "電子報系統",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "精準分眾發送電子報，自動化行銷流程，搭配 GA4 數據追蹤，支援會員分群自動發送與拖曳式版型編輯器。",
+      "featureList": [
+        "會員分群自動發送",
+        "GA4 開信率追蹤",
+        "拖曳式版型編輯器"
+      ],
+      "brand": {
+        "@type": "Organization",
+        "name": "崴富國際有限公司"
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <div id="page-wrapper">
@@ -1420,17 +1698,23 @@ nav {
         <div class="sys-name">CPshirt 時尚選品</div>
         <div class="sys-brief">桃園龜山職業服飾專賣，白襯衫、西裝外套、西裝褲，保全‧房仲‧餐飲首選。</div>
       </a>
+      <a href="https://www.wavecorp1.com/ecsupply/" target="_blank" class="sys-card" style="text-decoration:none;">
+        <span class="sys-badge badge-live">LIVE</span>
+        <div class="sys-icon">📦</div>
+        <div class="sys-name">EC SUPPLY 商品管理</div>
+        <div class="sys-brief">電商賣家採購管理工具，快速比價與出貨追蹤。</div>
+      </a>
+      <a href="https://www.wavecorp1.com/invoice/" target="_blank" class="sys-card" style="text-decoration:none;">
+        <span class="sys-badge badge-live">LIVE</span>
+        <div class="sys-icon">🧾</div>
+        <div class="sys-name">三聯式發票計算機</div>
+        <div class="sys-brief">快速計算含稅金額，適用三聯式統一發票。</div>
+      </a>
       <a href="#systems" class="sys-card" style="text-decoration:none;">
         <span class="sys-badge badge-soon">即將上線</span>
         <div class="sys-icon">📅</div>
         <div class="sys-name">店面預約系統</div>
         <div class="sys-brief">線上預約、自動提醒，告別電話排程混亂。</div>
-      </a>
-      <a href="#systems" class="sys-card" style="text-decoration:none;">
-        <span class="sys-badge badge-soon">即將上線</span>
-        <div class="sys-icon">💳</div>
-        <div class="sys-name">店面收銀系統</div>
-        <div class="sys-brief">雲端 POS，支援多付款方式與對帳報表。</div>
       </a>
       <a href="#systems" class="sys-card" style="text-decoration:none;">
         <span class="sys-badge badge-soon">即將上線</span>
@@ -1451,6 +1735,24 @@ nav {
         <div class="sys-brief">房東租務自動化，合約到期提醒不漏接。</div>
       </a>
     </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section class="section-blog" id="blog">
+  <div class="blog-header">
+    <div class="about-label">/ 最新消息</div>
+    <h2>品牌動態・產業觀點</h2>
+    <div class="gold-divider"></div>
+  </div>
+  <div class="blog-grid" id="blogGrid">
+    <div class="blog-empty">
+      <span class="blog-empty-icon">📝</span>
+      目前尚無文章，敬請期待。
+    </div>
+  </div>
+  <div id="blogMoreWrap" style="text-align:center;margin-top:48px;display:none;">
+    <a href="/news/" class="blog-more-btn">更多文章 →</a>
   </div>
 </section>
 
@@ -1511,8 +1813,34 @@ nav {
       </div>
     </div>
     <div class="system-card">
-      <span class="sys-status status-soon">即將上線</span>
+      <span class="sys-status status-live">LIVE</span>
       <div class="sys-num">02</div>
+      <span class="sys-big-icon">📦</span>
+      <h3 class="sys-card-name">EC SUPPLY 商品管理工具</h3>
+      <div class="sys-card-desc">電商賣家採購管理平台，快速建立商品清單、比價採購、追蹤出貨進度，提升備貨效率。</div>
+      <div class="sys-features">
+        <div class="sys-feat">商品採購清單管理</div>
+        <div class="sys-feat">多供應商比價追蹤</div>
+        <div class="sys-feat">出貨進度即時掌控</div>
+        <div class="sys-feat"><a href="https://www.wavecorp1.com/ecsupply/" target="_blank" style="color:var(--gold);">立即使用 →</a></div>
+      </div>
+    </div>
+    <div class="system-card">
+      <span class="sys-status status-live">LIVE</span>
+      <div class="sys-num">03</div>
+      <span class="sys-big-icon">🧾</span>
+      <h3 class="sys-card-name">三聯式統一發票計算機</h3>
+      <div class="sys-card-desc">快速計算含稅、未稅金額，適用三聯式統一發票開立，適合企業採購與報帳使用。</div>
+      <div class="sys-features">
+        <div class="sys-feat">含稅 / 未稅快速換算</div>
+        <div class="sys-feat">三聯式發票格式適用</div>
+        <div class="sys-feat">手機平板均可操作</div>
+        <div class="sys-feat"><a href="https://www.wavecorp1.com/invoice/" target="_blank" style="color:var(--gold);">立即使用 →</a></div>
+      </div>
+    </div>
+    <div class="system-card">
+      <span class="sys-status status-soon">即將上線</span>
+      <div class="sys-num">04</div>
       <span class="sys-big-icon">📅</span>
       <h3 class="sys-card-name">店面預約系統</h3>
       <div class="sys-card-desc">線上預約管理，自動發送提醒通知，減少爽約率，讓門市排班更有效率。</div>
@@ -1524,7 +1852,7 @@ nav {
     </div>
     <div class="system-card">
       <span class="sys-status status-soon">即將上線</span>
-      <div class="sys-num">03</div>
+      <div class="sys-num">05</div>
       <span class="sys-big-icon">📧</span>
       <h3 class="sys-card-name">電子報系統</h3>
       <div class="sys-card-desc">精準分眾發送，自動化行銷流程，搭配 GA4 數據追蹤，最大化每封信的轉換價值。</div>
@@ -1536,19 +1864,7 @@ nav {
     </div>
     <div class="system-card">
       <span class="sys-status status-soon">即將上線</span>
-      <div class="sys-num">04</div>
-      <span class="sys-big-icon">💳</span>
-      <h3 class="sys-card-name">店面收銀系統</h3>
-      <div class="sys-card-desc">雲端 POS 收銀，支援現金、信用卡、LINE Pay，自動生成每日對帳報表，掌握每筆收入。</div>
-      <div class="sys-features">
-        <div class="sys-feat">多付款方式整合</div>
-        <div class="sys-feat">每日自動對帳報表</div>
-        <div class="sys-feat">手機平板均可操作</div>
-      </div>
-    </div>
-    <div class="system-card">
-      <span class="sys-status status-soon">即將上線</span>
-      <div class="sys-num">05</div>
+      <div class="sys-num">06</div>
       <span class="sys-big-icon">🏪</span>
       <h3 class="sys-card-name">分店管理系統</h3>
       <div class="sys-card-desc">多據點庫存與人員同步管控，總部一個畫面掌握所有分店動態，告別 LINE 群組回報混亂。</div>
@@ -1560,7 +1876,7 @@ nav {
     </div>
     <div class="system-card">
       <span class="sys-status status-soon">即將上線</span>
-      <div class="sys-num">06</div>
+      <div class="sys-num">07</div>
       <span class="sys-big-icon">🏠</span>
       <h3 class="sys-card-name">租房管理系統</h3>
       <div class="sys-card-desc">房東的智慧助手，自動追蹤租約到期、租金到帳，電子合約簽署，讓租務管理輕鬆自在。</div>
@@ -1625,21 +1941,6 @@ nav {
   </div>
 </section>
 
-<!-- BLOG -->
-<section class="section-blog" id="blog">
-  <div class="blog-header">
-    <div class="about-label">/ 最新消息</div>
-    <h2>品牌動態・產業觀點</h2>
-    <div class="gold-divider"></div>
-  </div>
-  <div class="blog-grid" id="blogGrid">
-    <div class="blog-empty">
-      <span class="blog-empty-icon">📝</span>
-      目前尚無文章。按 <strong>F11</strong> 開啟後台，開始撰寫第一篇文章吧！
-    </div>
-  </div>
-</section>
-
 <!-- SINGLE POST PAGE -->
 <div id="post-page">
   <div class="post-page-inner">
@@ -1647,6 +1948,18 @@ nav {
     <div class="post-meta" id="postMeta"></div>
     <h1 class="post-title" id="postTitle"></h1>
     <div class="post-divider"></div>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1191429468053714"
+         crossorigin="anonymous"></script>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-1191429468053714"
+         data-ad-slot="3964431784"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
     <div class="post-content" id="postContent"></div>
   </div>
 </div>
@@ -1654,26 +1967,71 @@ nav {
 <!-- ADMIN OVERLAY -->
 <div id="admin-overlay">
   <div class="admin-topbar">
-    <div class="admin-topbar-brand">⚙️ <em>Wave</em> 後台管理</div>
-    <div class="admin-topbar-tabs">
-      <button class="admin-tab-btn active" onclick="adminSwitchTab('posts')">📝 文章管理</button>
-    </div>
+    <div class="admin-topbar-brand">⚙ <em>Wave</em> 後台管理</div>
     <button class="admin-close-btn" onclick="closeAdmin()">✕ 關閉後台（F11）</button>
   </div>
   <div class="admin-body">
-    <div class="admin-sidebar">
-      <div class="admin-sidebar-header">
-        <h3>所有文章</h3>
-        <button class="btn-new-post" onclick="adminNewPost()">＋ 新增</button>
-      </div>
-      <div class="admin-post-list" id="adminPostList"></div>
+
+    <!-- 左側導覽 WP 風格 -->
+    <div class="admin-wp-nav">
+      <div class="admin-wp-nav-section">文章</div>
+      <a class="admin-wp-nav-item active" id="navAllPosts" onclick="adminShowView('list')">📋 所有文章</a>
+      <a class="admin-wp-nav-item" id="navNewPost" onclick="adminNewPost()">＋ 新增文章</a>
+      <div class="admin-wp-nav-section">設定</div>
+      <a class="admin-wp-nav-item" id="navCategories" onclick="adminShowView('categories')">🏷 分類設定</a>
     </div>
-    <div class="admin-editor-area" id="adminEditorArea">
+
+    <!-- 右側主區域 -->
+    <div class="admin-main-area" id="adminMainArea">
+
+      <!-- 文章列表 view -->
+      <div id="adminListView">
+        <div class="admin-list-header">
+          <h2>所有文章</h2>
+          <button class="btn-new-post" onclick="adminNewPost()">＋ 新增文章</button>
+        </div>
+        <table class="admin-post-table">
+          <thead>
+            <tr>
+              <th>標題</th>
+              <th style="width:150px;">分類</th>
+              <th style="width:100px;">日期</th>
+              <th style="width:90px;">狀態</th>
+              <th style="width:100px;">操作</th>
+            </tr>
+          </thead>
+          <tbody id="adminPostTableBody"></tbody>
+        </table>
+      </div>
+
+      <!-- 分類設定 view -->
+      <div id="adminCategoriesView" style="display:none;">
+        <div class="admin-list-header">
+          <h2>分類設定</h2>
+        </div>
+        <div style="padding:24px;max-width:480px;">
+          <div style="margin-bottom:16px;">
+            <label style="font-size:13px;font-weight:600;color:#1a1a2e;display:block;margin-bottom:6px;">新增分類</label>
+            <div style="display:flex;gap:8px;">
+              <input type="text" id="newCategoryInput" placeholder="輸入分類名稱" style="flex:1;padding:8px 12px;border:1.5px solid #e8e4dc;border-radius:6px;font-size:13px;">
+              <button onclick="adminAddCategory()" style="padding:8px 16px;background:#1a1a2e;color:#c9a96e;border:none;border-radius:6px;font-weight:700;cursor:pointer;">新增</button>
+            </div>
+          </div>
+          <div id="categoryList" style="border:1px solid #e8e4dc;border-radius:8px;overflow:hidden;"></div>
+        </div>
+      </div>
+
+      <!-- 編輯器 view -->
+      <div id="adminEditorArea" style="display:none;">
       <div class="admin-no-post" id="adminNoPost">
         <div class="admin-no-post-icon">✍️</div>
         <div>點選左側文章，或按「＋ 新增」開始撰寫</div>
       </div>
       <div id="adminEditorPanel" style="display:none; flex:1; flex-direction:column; overflow:hidden;">
+        <!-- 返回列表 -->
+        <div style="padding:8px 16px;background:#f7f5f0;border-bottom:1px solid #e8e4dc;">
+          <button onclick="adminShowView('list')" style="background:none;border:none;color:#c9a96e;font-size:13px;cursor:pointer;font-weight:600;font-family:inherit;">← 所有文章</button>
+        </div>
         <!-- 第一列：基本資訊 -->
         <div class="admin-field-row">
           <input type="text" id="adminTitle" class="admin-title-input" placeholder="文章標題" oninput="adminAutoSlug()">
@@ -1690,6 +2048,7 @@ nav {
           <input type="text" id="adminMetaTitle" placeholder="Meta Title" style="flex:1;min-width:160px;">
           <input type="text" id="adminMetaDesc" placeholder="Meta Description" style="flex:1;min-width:200px;">
           <input type="text" id="adminOgImage" placeholder="OG 圖片 URL" style="width:160px;">
+          <input type="text" id="adminKeywords" placeholder="Keywords（逗號分隔，6~10個）" style="flex:1;min-width:200px;">
           <button class="toolbar-btn" style="font-size:11px;border-color:#185fa5;color:#185fa5;" onclick="adminOpenSchemaPanel()">⚙ Schema</button>
         </div>
         <!-- 工具列 -->
@@ -1744,11 +2103,57 @@ nav {
           <div style="font-size:11px;color:rgba(255,255,255,0.4);line-height:1.6;">貼上完整的 JSON-LD 內容（不含 &lt;script&gt; 標籤）。留空則自動使用 NewsArticle 預設 schema。</div>
           <button onclick="window.open('https://search.google.com/test/rich-results','_blank')" style="margin-top:8px;padding:4px 12px;background:rgba(201,169,110,0.15);border:1px solid #c9a96e;border-radius:5px;color:#c9a96e;font-size:11px;cursor:pointer;font-family:inherit;">🔍 Google Rich Results Test</button>
         </div>
-        <textarea id="adminSchema" style="flex:1;background:#1e1e2e;color:#cdd6f4;border:none;padding:16px;font-family:'Space Mono',monospace;font-size:12px;line-height:1.7;resize:none;outline:none;width:100%;" placeholder='{"@context":"https://schema.org","@type":"NewsArticle",...}'></textarea>
-      </div>
-    </div>
-  </div>
-</div>
+        <textarea id="adminSchema" style="flex:1;background:#1e1e2e;color:#cdd6f4;border:none;padding:16px;font-family:'Space Mono',monospace;font-size:12px;line-height:1.7;resize:none;outline:none;width:100%;" placeholder='{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "NewsArticle",
+      "headline": "文章標題",
+      "datePublished": "2026-05-20",
+      "dateModified": "2026-05-20",
+      "author": {
+        "@type": "Person",
+        "name": "版主",
+        "url": "https://wavecorp1.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "崴富國際有限公司",
+        "url": "https://wavecorp1.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://wavecorp1.com/logo.png",
+          "width": 200,
+          "height": 60
+        }
+      },
+      "url": "https://wavecorp1.com/news/your-slug.html",
+      "description": "文章摘要描述",
+      "image": "https://wavecorp1.com/images/cover.jpg",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://wavecorp1.com/news/your-slug.html"
+      },
+      "keywords": "關鍵字1, 關鍵字2"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "首頁", "item": "https://wavecorp1.com" },
+        { "@type": "ListItem", "position": 2, "name": "最新消息", "item": "https://wavecorp1.com/#blog" },
+        { "@type": "ListItem", "position": 3, "name": "文章標題", "item": "https://wavecorp1.com/news/your-slug.html" }
+      ]
+    }
+  ]
+}'></textarea>
+      </div><!-- end adminSchemaPanel -->
+      </div><!-- end adminEditorArea -->
+    </div><!-- end adminMainArea -->
+  </div><!-- end admin-body -->
+</div><!-- end admin-overlay -->
+
+<!-- 回到最上方 -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到最上方">&#8679;</button>
 
 <!-- Toast -->
 <div id="admin-toast"></div>
@@ -1806,6 +2211,8 @@ nav {
    CONFIG
 ══════════════════════════════════════════════════ */
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbx6W0RYUzWBfYh3zBLMRi0KAKwfzzl5zC4LSYOnYTf2jXt-swVI7IVDygW9TJkSiYuddw/exec';
+const SUPABASE_URL  = 'https://ljbtnysponckfonzcdpa.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxqYnRueXNwb25ja2ZvbnpjZHBhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyODMyNTksImV4cCI6MjA5NDg1OTI1OX0.Y9MaYpWeb664DTbxNeMFB2uVRn8Kinuf-soh0plJ9V8';
 
 /* ── Scrolled nav ── */
 const nav = document.getElementById('mainNav');
@@ -1830,17 +2237,25 @@ document.querySelectorAll('.system-card, .brand-card, .about-card-main').forEach
 });
 
 /* ══════════════════════════════════════════════════
-   BLOG — 首頁渲染（從 GAS 讀文章）
+   BLOG — 首頁渲染（從 Supabase 讀已發布文章）
 ══════════════════════════════════════════════════ */
 let allPosts = [];
 
 async function loadBlogPosts() {
   const grid = document.getElementById('blogGrid');
   try {
-    const res = await fetch(GAS_URL + '?action=load');
-    const data = await res.json();
-    allPosts = (data.posts || []).filter(p => p.status === 'published');
-    renderBlogGrid(allPosts.slice(0, 4));
+    // 多抓一筆（7篇）判斷是否超過6篇
+    const res = await fetch(
+      SUPABASE_URL + '/rest/v1/posts?status=eq.published&order=created_at.desc&limit=7',
+      { headers: { 'apikey': SUPABASE_ANON, 'Authorization': 'Bearer ' + SUPABASE_ANON } }
+    );
+    const posts = await res.json() || [];
+    const hasMore = posts.length > 6;
+    allPosts = posts.slice(0, 6);
+    renderBlogGrid(allPosts);
+    // 超過6篇顯示「更多文章」按鈕
+    const moreWrap = document.getElementById('blogMoreWrap');
+    if (moreWrap) moreWrap.style.display = hasMore ? 'block' : 'none';
   } catch(e) {
     grid.innerHTML = `<div class="blog-empty"><span class="blog-empty-icon">📡</span>無法載入文章，請稍後再試。</div>`;
   }
@@ -1849,7 +2264,7 @@ async function loadBlogPosts() {
 function renderBlogGrid(posts) {
   const grid = document.getElementById('blogGrid');
   if (!posts || !posts.length) {
-    grid.innerHTML = `<div class="blog-empty"><span class="blog-empty-icon">📝</span>目前尚無已發布文章。</div>`;
+    grid.innerHTML = `<div class="blog-empty"><span class="blog-empty-icon">📝</span>目前尚無文章，敬請期待。</div>`;
     return;
   }
   grid.innerHTML = posts.map(p => {
@@ -1908,6 +2323,7 @@ async function openAdmin() {
   const o = document.getElementById('admin-overlay');
   o.style.display = 'flex';
   o.style.flexDirection = 'column';
+  adminShowView('list');
   showToast('⏳ 載入文章中…');
   await adminLoadFromGAS();
 }
@@ -1917,42 +2333,136 @@ function closeAdmin() {
   loadBlogPosts(); // 重新渲染首頁
 }
 
-/* ── 從 GAS 讀所有文章 ── */
+/* ── 從 Supabase 讀所有文章（後台，含草稿）── */
 async function adminLoadFromGAS() {
   try {
-    const res = await fetch(GAS_URL + '?action=load');
-    const data = await res.json();
-    adminPosts = data.posts || [];
+    const res = await fetch(
+      SUPABASE_URL + '/rest/v1/posts?order=created_at.desc',
+      { headers: { 'apikey': SUPABASE_ANON, 'Authorization': 'Bearer ' + SUPABASE_ANON } }
+    );
+    adminPosts = await res.json() || [];
     renderAdminSidebar();
     showToast('✅ 文章已同步');
   } catch(e) {
-    showToast('❌ 無法連線 GAS');
-    // fallback: 用 localStorage
+    showToast('❌ 無法連線 Supabase');
     try { adminPosts = JSON.parse(localStorage.getItem('wave_blog_posts')) || []; } catch(e2) {}
     renderAdminSidebar();
   }
 }
 
-/* ── 側欄渲染 ── */
+/* ── 切換左側導覽 view ── */
+function adminShowView(view) {
+  document.getElementById('adminListView').style.display       = view==='list'       ? 'block' : 'none';
+  document.getElementById('adminCategoriesView').style.display = view==='categories' ? 'block' : 'none';
+  document.getElementById('adminEditorArea').style.display     = view==='editor'     ? 'flex'  : 'none';
+  document.querySelectorAll('.admin-wp-nav-item').forEach(el => el.classList.remove('active'));
+  if(view==='list')       document.getElementById('navAllPosts').classList.add('active');
+  if(view==='categories') document.getElementById('navCategories').classList.add('active');
+  if(view==='editor')     document.getElementById('navNewPost').classList.add('active');
+}
+
+/* ── 文章列表表格渲染 ── */
 function renderAdminSidebar() {
-  const list = document.getElementById('adminPostList');
+  renderAdminTable();
+  renderCategoryList();
+}
+
+function renderAdminTable() {
+  const tbody = document.getElementById('adminPostTableBody');
+  if (!tbody) return;
   if (!adminPosts.length) {
-    list.innerHTML = `<div style="padding:20px;font-size:12px;color:#aaa;text-align:center;">尚無文章<br>按「＋ 新增」開始</div>`;
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:40px;color:#aaa;">尚無文章，按「＋ 新增文章」開始</td></tr>`;
     return;
   }
-  list.innerHTML = adminPosts.map(p => `
-    <div class="admin-post-item ${p.id===adminCurrentId?'active':''}" onclick="adminLoadPost('${p.id}')">
-      <div style="flex:1">
-        <div class="admin-post-item-title">${esc(p.title||'（無標題）')}</div>
-        <div class="admin-post-item-meta">
-          ${p.date||''} ${p.category?'· '+p.category:''}
-          <span style="margin-left:6px;padding:1px 6px;border-radius:3px;font-size:9px;background:${p.status==='published'?'rgba(39,174,96,0.15)':'rgba(201,169,110,0.15)'};color:${p.status==='published'?'#27ae60':'#c9a96e'};">
-            ${p.status==='published'?'已發布':'草稿'}
-          </span>
+  tbody.innerHTML = adminPosts.map(p => `
+    <tr>
+      <td>
+        <a class="admin-table-title" onclick="adminLoadPost('${p.id}')">${esc(p.title||'（無標題）')}</a>
+        <div style="font-size:11px;color:#aaa;margin-top:3px;">
+          ${p.slug ? `slug: ${p.slug}` : ''}
         </div>
+      </td>
+      <td style="font-size:12px;color:var(--steel);">${esc(p.category||'—')}</td>
+      <td style="font-size:12px;color:var(--steel);">${p.date||'—'}</td>
+      <td>
+        <span style="padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;background:${p.status==='published'?'rgba(39,174,96,0.12)':'rgba(201,169,110,0.12)'};color:${p.status==='published'?'#27ae60':'#c9a96e'};">
+          ${p.status==='published'?'已發布':'草稿'}
+        </span>
+      </td>
+      <td>
+        <div class="admin-table-actions">
+          <button onclick="adminLoadPost('${p.id}')" style="padding:4px 10px;font-size:11px;background:#1a1a2e;color:#c9a96e;border:none;border-radius:4px;cursor:pointer;">編輯</button>
+          ${p.status==='published' && p.slug ? `<a href="/news/${p.slug}.html" target="_blank" style="padding:4px 10px;font-size:11px;background:rgba(201,169,110,0.1);color:#c9a96e;border:1px solid rgba(201,169,110,0.3);border-radius:4px;text-decoration:none;">查看</a>` : ''}
+          <button onclick="adminDeletePost('${p.id}')" style="padding:4px 8px;font-size:11px;background:rgba(230,57,70,0.1);color:#e63946;border:1px solid rgba(230,57,70,0.2);border-radius:4px;cursor:pointer;">刪除</button>
+        </div>
+      </td>
+    </tr>`).join('');
+}
+
+/* ── 分類列表 ── */
+let adminCategories = [];
+function renderCategoryList() {
+  const cats = [...new Set(adminPosts.map(p=>p.category).filter(Boolean))];
+  adminCategories = cats;
+  const el = document.getElementById('categoryList');
+  if (!el) return;
+  if (!cats.length) { el.innerHTML = `<div style="padding:16px;color:#aaa;font-size:13px;">尚無分類</div>`; return; }
+  el.innerHTML = cats.map(c => {
+    const count = adminPosts.filter(p=>p.category===c).length;
+    return `
+    <div style="padding:10px 16px;border-bottom:1px solid #f0ede8;display:flex;justify-content:space-between;align-items:center;font-size:13px;">
+      <span>${esc(c)}</span>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span style="font-size:11px;color:#aaa;">${count} 篇</span>
+        <button onclick="adminRenameCategory('${esc(c)}')" style="padding:3px 10px;font-size:11px;background:none;border:1.5px solid #c9a96e;color:#c9a96e;border-radius:5px;cursor:pointer;font-family:inherit;font-weight:600;">改名</button>
+        <button onclick="adminDeleteCategory('${esc(c)}')" style="padding:3px 10px;font-size:11px;background:none;border:1.5px solid #e63946;color:#e63946;border-radius:5px;cursor:pointer;font-family:inherit;font-weight:600;">刪除</button>
       </div>
-      <button class="admin-post-item-del" onclick="event.stopPropagation();adminDeletePost('${p.id}')" title="刪除">✕</button>
-    </div>`).join('');
+    </div>`;
+  }).join('');
+}
+
+async function adminRenameCategory(oldName) {
+  const newName = prompt(`將「${oldName}」改名為：`, oldName);
+  if (!newName || newName.trim() === oldName) return;
+  const trimmed = newName.trim();
+  const affected = adminPosts.filter(p => p.category === oldName);
+  if (!affected.length) { renderCategoryList(); return; }
+  showToast(`⏳ 更新 ${affected.length} 篇文章中…`);
+  for (const post of affected) {
+    post.category = trimmed;
+    try {
+      await fetch(GAS_URL, { method: 'POST', body: JSON.stringify({ action: 'save', post }) });
+    } catch(e) {}
+  }
+  localStorage.setItem('wave_blog_posts', JSON.stringify(adminPosts));
+  renderCategoryList();
+  renderAdminTable();
+  showToast(`✅ 已將「${oldName}」改名為「${trimmed}」`);
+}
+
+async function adminDeleteCategory(name) {
+  const count = adminPosts.filter(p => p.category === name).length;
+  if (!confirm(`確定刪除分類「${name}」？\n\n此分類有 ${count} 篇文章，刪除後將自動移至「未分類」。`)) return;
+  const affected = adminPosts.filter(p => p.category === name);
+  showToast(`⏳ 更新 ${affected.length} 篇文章中…`);
+  for (const post of affected) {
+    post.category = '未分類';
+    try {
+      await fetch(GAS_URL, { method: 'POST', body: JSON.stringify({ action: 'save', post }) });
+    } catch(e) {}
+  }
+  localStorage.setItem('wave_blog_posts', JSON.stringify(adminPosts));
+  renderCategoryList();
+  renderAdminTable();
+  showToast(`🗑 分類「${name}」已刪除，文章移至未分類`);
+}
+function adminAddCategory() {
+  const input = document.getElementById('newCategoryInput');
+  const val = input.value.trim();
+  if (!val) return;
+  if (!adminCategories.includes(val)) adminCategories.push(val);
+  input.value = '';
+  showToast('✅ 分類已新增，發文時輸入此分類名稱即可');
 }
 
 /* ── 新增文章 ── */
@@ -1960,10 +2470,10 @@ function adminNewPost() {
   const today = new Date().toISOString().slice(0,10);
   const id = Date.now().toString(36) + Math.random().toString(36).slice(2,5);
   const p = { id, title:'', slug:'', author:'版主', category:'', date:today,
-               status:'draft', content:'', metaTitle:'', metaDesc:'', ogImage:'', schema:'' };
+               status:'draft', content:'', metaTitle:'', metaDesc:'', ogImage:'', keywords:'', schema:'' };
   adminPosts.unshift(p);
+  renderAdminTable();
   adminLoadPost(p.id);
-  renderAdminSidebar();
 }
 
 /* ── 載入文章到編輯器 ── */
@@ -1971,6 +2481,7 @@ function adminLoadPost(id) {
   adminCurrentId = id;
   const p = adminPosts.find(x => x.id===id);
   if (!p) return;
+  adminShowView('editor');
   document.getElementById('adminNoPost').style.display = 'none';
   const panel = document.getElementById('adminEditorPanel');
   panel.style.display = 'flex';
@@ -1986,6 +2497,7 @@ function adminLoadPost(id) {
   document.getElementById('adminMetaTitle').value= p.metaTitle|| '';
   document.getElementById('adminMetaDesc').value = p.metaDesc || '';
   document.getElementById('adminOgImage').value  = p.ogImage  || '';
+  document.getElementById('adminKeywords').value = p.keywords || '';
   document.getElementById('adminSchema').value   = p.schema   || '';
 
   const htmlForEdit = (p.content||'').replace(/<!--readmore-->/g,
@@ -2023,6 +2535,7 @@ function adminGetCurrentPost() {
     metaTitle: document.getElementById('adminMetaTitle').value,
     metaDesc:  document.getElementById('adminMetaDesc').value,
     ogImage:   document.getElementById('adminOgImage').value,
+    keywords:  document.getElementById('adminKeywords').value,
     schema:    document.getElementById('adminSchema').value,
     content
   };
@@ -2035,16 +2548,16 @@ async function adminSave() {
   post.status = post.status || 'draft';
   const idx = adminPosts.findIndex(x => x.id===post.id);
   if (idx>=0) adminPosts[idx] = post; else adminPosts.unshift(post);
-  // 先存 localStorage 備份
   localStorage.setItem('wave_blog_posts', JSON.stringify(adminPosts));
   showToast('⏳ 儲存中…');
   try {
-    await fetch(GAS_URL, {
-      method:'POST', mode:'no-cors',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ action:'save', post })
+    const res = await fetch(GAS_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'save', post })
     });
-    showToast('✅ 草稿已儲存');
+    const data = await res.json();
+    if (data.ok) showToast('✅ 草稿已儲存');
+    else showToast('⚠️ ' + (data.error || '儲存失敗'));
   } catch(e) {
     showToast('⚠️ 已存本機，GAS 連線失敗');
   }
@@ -2056,7 +2569,7 @@ async function adminPublish() {
   const post = adminGetCurrentPost();
   if (!post) return;
   if (!post.slug) { showToast('❌ 請填寫 URL Slug'); return; }
-  if (!confirm(`確定發布「${post.title}」？\n\n發布後會在 GitHub 生成靜態 HTML：\n/news/${post.slug}.html`)) return;
+  if (!confirm(`確定發布「${post.title}」？\n\n發布後網址：\nwavecorp1.com/news/${post.slug}.html`)) return;
   post.status = 'published';
   const idx = adminPosts.findIndex(x => x.id===post.id);
   if (idx>=0) adminPosts[idx] = post; else adminPosts.unshift(post);
@@ -2064,13 +2577,14 @@ async function adminPublish() {
   showToast('⏳ 發布中，推送 GitHub…');
   try {
     const res = await fetch(GAS_URL, {
-      method:'POST', mode:'no-cors',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ action:'publish', post })
+      method: 'POST',
+      body: JSON.stringify({ action: 'publish', post })
     });
-    showToast('🚀 已發布！wavecorp1.com/news/'+post.slug+'.html');
+    const data = await res.json();
+    if (data.ok) showToast('🚀 已發布！wavecorp1.com/news/' + post.slug + '.html');
+    else showToast('⚠️ ' + (data.error || '發布失敗'));
   } catch(e) {
-    showToast('⚠️ 已存本機，發布請稍後重試');
+    showToast('⚠️ 發布失敗，請重試');
   }
   renderAdminSidebar();
 }
@@ -2086,11 +2600,7 @@ async function adminDeletePost(id) {
     document.getElementById('adminEditorPanel').style.display = 'none';
   }
   try {
-    await fetch(GAS_URL, {
-      method:'POST', mode:'no-cors',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ action:'delete', id })
-    });
+    await fetch(GAS_URL + '?action=delete&id=' + encodeURIComponent(id));
   } catch(e) {}
   renderAdminSidebar();
   showToast('🗑 文章已刪除');
@@ -2116,6 +2626,51 @@ function adminOpenSchemaPanel() {
   const p = document.getElementById('adminSchemaPanel');
   p.style.display = 'flex';
   p.style.flexDirection = 'column';
+
+  // 如果 schema 欄位是空的，自動填入預設模板
+  const ta = document.getElementById('adminSchema');
+  if (!ta.value.trim()) {
+    const post = adminPosts.find(p => p.id === adminCurrentId) || {};
+    const title    = document.getElementById('adminTitle').value || post.title || '文章標題';
+    const slug     = post.slug || 'your-slug';
+    const date     = document.getElementById('adminDate').value || post.date || new Date().toISOString().slice(0,10);
+    const author   = document.getElementById('adminAuthor').value || post.author || '版主';
+    const category = document.getElementById('adminCategory').value || post.category || '';
+    const metaDesc = document.getElementById('adminMetaDesc').value || post.metaDesc || '文章摘要描述';
+    const ogImage  = document.getElementById('adminOgImage').value || post.ogImage || '';
+    ta.value = JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "NewsArticle",
+          "headline": title,
+          "datePublished": date,
+          "dateModified": date,
+          "author": { "@type": "Person", "name": author, "url": "https://www.wavecorp1.com" },
+          "publisher": {
+            "@type": "Organization",
+            "name": "崴富國際有限公司",
+            "url": "https://www.wavecorp1.com",
+            "logo": { "@type": "ImageObject", "url": "https://www.wavecorp1.com/logo.png", "width": 200, "height": 60 }
+          },
+          "url": "https://www.wavecorp1.com/news/" + slug + ".html",
+          "description": metaDesc,
+          "image": ogImage || "https://www.wavecorp1.com/logo.png",
+          "mainEntityOfPage": { "@type": "WebPage", "@id": "https://www.wavecorp1.com/news/" + slug + ".html" },
+          "keywords": category
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "首頁", "item": "https://www.wavecorp1.com" },
+            { "@type": "ListItem", "position": 2, "name": "最新消息", "item": "https://www.wavecorp1.com/#blog" },
+            { "@type": "ListItem", "position": 3, "name": title, "item": "https://www.wavecorp1.com/news/" + slug + ".html" }
+          ]
+        }
+      ]
+    }, null, 2);
+  }
+  document.getElementById('adminSchema').focus();
 }
 function adminCloseSchemaPanel() {
   document.getElementById('adminSchemaPanel').style.display = 'none';
@@ -2156,7 +2711,20 @@ function adminExecLink() {
 }
 function adminInsertImage() {
   const url = prompt('請輸入圖片網址:');
-  if (url) adminExec('insertImage', url);
+  if (!url) return;
+  const alt = prompt('請輸入圖片 ALT 文字（可留空）:') || '';
+  const visual = document.getElementById('visualEditor');
+  const html = document.getElementById('htmlEditor');
+  const img = `<img src="${url}" alt="${alt.replace(/"/g,'&quot;')}" style="max-width:100%;border-radius:10px;margin:20px 0;display:block;">`;
+  if (adminEditorMode === 'html') {
+    const pos = html.selectionStart;
+    html.value = html.value.slice(0, pos) + img + html.value.slice(pos);
+    html.dispatchEvent(new Event('input'));
+  } else {
+    visual.focus();
+    document.execCommand('insertHTML', false, img);
+    adminUpdatePreview();
+  }
 }
 
 /* ── 插入閱讀更多 ── */
@@ -2204,6 +2772,12 @@ function showToast(msg) {
 
 /* ── Init ── */
 loadBlogPosts();
+
+/* ── 回到最上方 ── */
+const backToTopBtn = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+  backToTopBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+});
 </script>
 </body>
 </html>
