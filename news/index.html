@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>最新消息・產業觀點 | WaveEC 崴富國際</title>
+<meta name="description" content="崴富國際最新消息、產業觀點與品牌動態。涵蓋半導體、AI、職場穿搭等精選文章。">
+<link rel="canonical" href="https://www.wavecorp1.com/news/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1a1a2e;--gold:#c9a96e;--gold-light:#e8d5aa;--paper:#f7f5f0;--steel:#4a5568;--mist:#e8e4dc;--white:#ffffff;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--paper);color:#2d2d2d;}
+nav{position:sticky;top:0;z-index:100;background:rgba(247,245,240,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(201,169,110,0.2);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-family:'Playfair Display',serif;font-weight:900;font-size:20px;color:var(--navy);text-decoration:none;letter-spacing:2px;}
+.nav-logo span{color:var(--gold);}
+.nav-back{font-size:13px;color:var(--gold);font-weight:700;text-decoration:none;}
+.nav-back:hover{opacity:0.7;}
+.hero{padding:80px 40px 60px;text-align:center;max-width:800px;margin:0 auto;}
+.about-label{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:16px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,52px);font-weight:900;color:var(--navy);line-height:1.2;margin-bottom:16px;}
+.hero p{font-size:16px;color:var(--steel);line-height:1.8;}
+.gold-divider{width:60px;height:2px;background:var(--gold);margin:24px auto 0;}
+.wrap{max-width:1200px;margin:0 auto;padding:20px 40px 80px;}
+.filter-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px;}
+.filter-btn{padding:7px 18px;border-radius:20px;border:1px solid var(--mist);background:var(--white);font-size:13px;color:var(--steel);cursor:pointer;transition:all 0.2s;font-family:'Noto Sans TC',sans-serif;}
+.filter-btn:hover,.filter-btn.active{background:var(--navy);color:var(--gold);border-color:var(--navy);}
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px;}
+.blog-card{background:var(--white);border-radius:16px;border:1px solid var(--mist);overflow:hidden;transition:all 0.25s;text-decoration:none;color:inherit;display:block;}
+.blog-card:hover{border-color:var(--gold-light);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.07);}
+.blog-card-img-placeholder{width:100%;height:180px;background:linear-gradient(135deg,#1a1a2e 0%,#0f3460 100%);display:flex;align-items:center;justify-content:center;font-size:48px;}
+.blog-card-body{padding:20px 22px 22px;}
+.blog-card-meta{font-size:11px;color:var(--gold);letter-spacing:0.5px;margin-bottom:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.blog-card-cat{background:rgba(201,169,110,0.12);padding:2px 8px;border-radius:4px;font-size:10px;letter-spacing:0.5px;border:1px solid rgba(201,169,110,0.25);}
+.blog-card-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--navy);line-height:1.4;margin-bottom:10px;}
+.blog-card-excerpt{font-size:13px;color:var(--steel);line-height:1.7;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.blog-card-readmore{display:inline-block;margin-top:14px;font-size:12px;color:var(--gold);font-weight:700;letter-spacing:0.5px;}
+.load-more-wrap{text-align:center;margin-top:52px;}
+.load-more-btn{display:inline-block;padding:14px 48px;background:var(--navy);color:var(--gold);font-size:14px;font-weight:700;letter-spacing:1px;border-radius:6px;border:none;cursor:pointer;transition:all 0.2s;font-family:'Noto Sans TC',sans-serif;}
+.load-more-btn:hover{background:var(--gold);color:var(--navy);transform:translateY(-2px);}
+.load-more-btn:disabled{opacity:0.4;cursor:default;transform:none;}
+.blog-empty{text-align:center;padding:80px 20px;color:var(--steel);font-size:16px;grid-column:1/-1;}
+.skeleton{background:linear-gradient(90deg,var(--mist) 25%,#f0ede6 50%,var(--mist) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px;}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+footer{background:#0d0d0d;padding:30px 40px;display:flex;align-items:center;justify-content:space-between;}
+.f-logo{font-family:'Playfair Display',serif;font-size:18px;font-weight:900;color:#fff;}
+.f-logo span{color:var(--gold);}
+.f-copy{font-size:11px;color:rgba(255,255,255,0.3);}
+@media(max-width:700px){nav{padding:0 20px;}.wrap{padding:20px 20px 60px;}.hero{padding:60px 20px 40px;}footer{flex-direction:column;gap:12px;padding:24px 20px;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="https://www.wavecorp1.com" class="nav-logo">WA<span>V</span>E</a>
+  <a href="https://www.wavecorp1.com" class="nav-back">← 返回首頁</a>
+</nav>
+
+<div class="hero">
+  <div class="about-label">/ 最新消息</div>
+  <h1>品牌動態・產業觀點</h1>
+  <p>半導體、AI 趨勢、職場穿搭與品牌資訊，持續更新中。</p>
+  <div class="gold-divider"></div>
+</div>
+
+<div class="wrap">
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-btn active" data-cat="">全部</button>
+  </div>
+  <div class="blog-grid" id="blogGrid"></div>
+  <div class="load-more-wrap" id="loadMoreWrap" style="display:none;">
+    <button class="load-more-btn" id="loadMoreBtn" onclick="loadMore()">載入更多文章</button>
+  </div>
+</div>
+
+<footer>
+  <div class="f-logo">WA<span>V</span>E ECOMMERCE</div>
+  <div class="f-copy">© 2026 崴富國際有限公司</div>
+</footer>
+
+<script>
+const SUPABASE_URL  = 'https://ljbtnysponckfonzcdpa.supabase.co';
+const SUPABASE_ANON = 'sb_publishable_dbSZrg8KiGT8o_6HrzyBdw_dB7wil2H';
+const PAGE_SIZE = 12;
+let currentPage = 0;
+let currentCat = '';
+let hasMore = false;
+let allCategories = new Set();
+
+async function fetchPosts(offset = 0, cat = '') {
+  let url = SUPABASE_URL + '/rest/v1/posts?status=eq.published&order=created_at.desc'
+    + `&limit=${PAGE_SIZE + 1}&offset=${offset}`;
+  if (cat) url += `&category=eq.${encodeURIComponent(cat)}`;
+  const res = await fetch(url, {
+    headers: { 'apikey': SUPABASE_ANON, 'Authorization': 'Bearer ' + SUPABASE_ANON }
+  });
+  return await res.json() || [];
+}
+
+async function init() {
+  const grid = document.getElementById('blogGrid');
+  grid.innerHTML = '<div class="blog-empty">載入中…</div>';
+  try {
+    const posts = await fetchPosts(0, '');
+    // 收集所有分類（先抓全部）
+    const allRes = await fetch(
+      SUPABASE_URL + '/rest/v1/posts?status=eq.published&select=category',
+      { headers: { 'apikey': SUPABASE_ANON, 'Authorization': 'Bearer ' + SUPABASE_ANON } }
+    );
+    const allData = await allRes.json() || [];
+    allData.forEach(p => { if (p.category) allCategories.add(p.category); });
+    renderFilterBar();
+    renderPosts(posts, false);
+  } catch(e) {
+    grid.innerHTML = '<div class="blog-empty">無法載入文章，請稍後再試。</div>';
+  }
+}
+
+function renderFilterBar() {
+  const bar = document.getElementById('filterBar');
+  allCategories.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.dataset.cat = cat;
+    btn.textContent = cat;
+    btn.onclick = () => filterByCat(cat);
+    bar.appendChild(btn);
+  });
+  document.querySelector('[data-cat=""]').onclick = () => filterByCat('');
+}
+
+async function filterByCat(cat) {
+  currentCat = cat;
+  currentPage = 0;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.cat === cat));
+  const posts = await fetchPosts(0, cat);
+  renderPosts(posts, false);
+}
+
+function renderPosts(posts, append) {
+  const grid = document.getElementById('blogGrid');
+  hasMore = posts.length > PAGE_SIZE;
+  const show = posts.slice(0, PAGE_SIZE);
+  const html = show.map(p => {
+    const MARKER = '<!--readmore-->';
+    const excerptHTML = (p.content||'').includes(MARKER)
+      ? (p.content||'').split(MARKER)[0]
+      : stripTags((p.content||'').slice(0,200)) + '…';
+    return `<a class="blog-card" href="/news/${encodeURIComponent(p.slug)}.html">
+      <div class="blog-card-img-placeholder">📰</div>
+      <div class="blog-card-body">
+        <div class="blog-card-meta">
+          <span>${esc(p.date||'')}</span>
+          ${p.category?`<span class="blog-card-cat">${esc(p.category)}</span>`:''}
+        </div>
+        <div class="blog-card-title">${esc(p.title||'（無標題）')}</div>
+        <div class="blog-card-excerpt">${excerptHTML}</div>
+        <span class="blog-card-readmore">閱讀全文 →</span>
+      </div>
+    </a>`;
+  }).join('');
+  if (append) grid.innerHTML += html;
+  else grid.innerHTML = show.length ? html : '<div class="blog-empty">目前沒有相關文章。</div>';
+  document.getElementById('loadMoreWrap').style.display = hasMore ? 'block' : 'none';
+  if (hasMore) currentPage++;
+}
+
+async function loadMore() {
+  const btn = document.getElementById('loadMoreBtn');
+  btn.disabled = true;
+  btn.textContent = '載入中…';
+  const posts = await fetchPosts(currentPage * PAGE_SIZE, currentCat);
+  renderPosts(posts, true);
+  btn.disabled = false;
+  btn.textContent = '載入更多文章';
+}
+
+function stripTags(html){const d=document.createElement('div');d.innerHTML=html;return d.innerText||'';}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+init();
+</script>
+</body>
+</html>
